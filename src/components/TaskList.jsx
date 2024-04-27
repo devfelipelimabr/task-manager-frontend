@@ -21,7 +21,7 @@ function TaskList() {
     });
     const [filterTitle, setFilterTitle] = useState('');
     const [filterTag, setFilterTag] = useState('');
-    
+
     useEffect(() => {
         axios.get('http://localhost:3000/tasks/all')
             .then(response => {
@@ -40,10 +40,13 @@ function TaskList() {
             });
     }, []);
 
-    const formatDate = date => {
-        const formattedDate = new Date(date).toLocaleDateString('pt-BR');
-        return formattedDate;
-    };
+    function formatDate(dateString) {
+        const dateParts = dateString.split('T')[0].split('-');
+        const year = dateParts[0];
+        const month = dateParts[1];
+        const day = dateParts[2];
+        return day + '/' + month + '/' + year;
+    }
 
     const handleCreateTask = () => {
         axios.post('http://localhost:3000/tasks', newTask)
@@ -144,7 +147,7 @@ function TaskList() {
                         <option key={tag.id} value={tag.name}>{tag.name}</option>
                     ))}
                 </select>
-               
+
                 <button className="btn btn-primary" onClick={handleFilter}>Filter</button>
             </div>
             <div className="input-group mb-3">

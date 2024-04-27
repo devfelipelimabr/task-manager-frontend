@@ -1,4 +1,3 @@
-// TaskList.js
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
@@ -20,6 +19,9 @@ function TaskList() {
     duration: '',
     tagId: ''
   });
+  const [filterTitle, setFilterTitle] = useState('');
+  const [filterTag, setFilterTag] = useState('');
+  const [filterMonthYear, setFilterMonthYear] = useState('');
 
   useEffect(() => {
     axios.get('http://localhost:3000/tasks/all')
@@ -39,9 +41,9 @@ function TaskList() {
       });
   }, []);
 
-  // Função para formatar a data no formato dd/mm/aaaa
   const formatDate = date => {
-    const formattedDate = new Date(date).toLocaleDateString('pt-BR');
+    const options = { month: 'long', year: 'numeric' };
+    const formattedDate = new Date(date).toLocaleDateString('pt-BR', options);
     return formattedDate;
   };
 
@@ -105,9 +107,48 @@ function TaskList() {
       });
   };
 
+  const handleFilter = () => {
+    axios.get('http://localhost:3000/tasks', {
+      params: {
+        title: filterTitle,
+        TagId: filterTag,
+        date: filterMonthYear
+      }
+    })
+      .then(response => {
+        setTasks(response.data);
+      })
+      .catch(error => {
+        console.error('Error fetching filtered tasks:', error);
+      });
+  };
+
   return (
     <div className="container mt-4">
       <h2 className="mb-4 text-light">Tasks</h2>
+      <div className="mb-3">
+        <input
+          type="text"
+          className="form-control mb-2"
+          placeholder="Filter by title"
+          value={filterTitle}
+          onChange={e => setFilterTitle(e.target.value)}
+        />
+        <input
+          type="text"
+          className="form-control mb-2"
+          placeholder="Filter by tag"
+          value={filterTag}
+          onChange={e => setFilterTag(e.target.value)}
+        />
+        <input
+          type="month"
+          className="form-control mb-2"
+          value={filterMonthYear}
+          onChange={e => setFilterMonthYear(e.target.value)}
+        />
+        <button className="btn btn-primary" onClick={handleFilter}>Filter</button>
+      </div>
       <div className="input-group mb-3">
         <input
           type="text"

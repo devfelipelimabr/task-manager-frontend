@@ -7,7 +7,7 @@ function TagList() {
   const [newTagName, setNewTagName] = useState('');
   const [editingTagId, setEditingTagId] = useState(null);
   const [editingTagName, setEditingTagName] = useState('');
-  const [editingTagOriginalName, setEditingTagOriginalName] = useState('');
+  const [setEditingTagOriginalName] = useState('');
 
   useEffect(() => {
     axios.get('http://localhost:3000/tags')

@@ -21,8 +21,7 @@ function TaskList() {
     });
     const [filterTitle, setFilterTitle] = useState('');
     const [filterTag, setFilterTag] = useState('');
-    const [filterDate, setFilterDate] = useState('');
-
+    
     useEffect(() => {
         axios.get('http://localhost:3000/tasks/all')
             .then(response => {
@@ -112,8 +111,7 @@ function TaskList() {
         axios.get('http://localhost:3000/tasks', {
             params: {
                 title: filterTitle,
-                TagId: tagId,
-                date: filterDate
+                TagId: tagId
             }
         })
             .then(response => {
@@ -146,13 +144,7 @@ function TaskList() {
                         <option key={tag.id} value={tag.name}>{tag.name}</option>
                     ))}
                 </select>
-                <input
-                    type="date"
-                    className="form-control mb-2"
-                    value={filterDate}
-                    onChange={e => setFilterDate(e.target.value)}
-                />
-
+               
                 <button className="btn btn-primary" onClick={handleFilter}>Filter</button>
             </div>
             <div className="input-group mb-3">

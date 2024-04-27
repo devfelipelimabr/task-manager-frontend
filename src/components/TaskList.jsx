@@ -136,13 +136,16 @@ function TaskList() {
                     value={filterTitle}
                     onChange={e => setFilterTitle(e.target.value)}
                 />
-                <input
-                    type="text"
+                <select
                     className="form-control mb-2"
-                    placeholder="Filter by tag"
                     value={filterTag}
                     onChange={e => setFilterTag(e.target.value)}
-                />
+                >
+                    <option value="">Filter by tag</option>
+                    {tags.map(tag => (
+                        <option key={tag.id} value={tag.name}>{tag.name}</option>
+                    ))}
+                </select>
                 <input
                     type="date"
                     className="form-control mb-2"

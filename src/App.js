@@ -7,14 +7,20 @@ import Signup from './components/Signup';
 
 function App() {
   const [token, setToken] = useState(localStorage.getItem('token'));
+  const [showLogin, setShowLogin] = useState(true);
 
   const handleLogin = (token) => {
+    localStorage.setItem('token', token);
     setToken(token);
   };
 
   const handleLogout = () => {
     localStorage.removeItem('token');
     setToken(null);
+  };
+
+  const toggleForm = () => {
+    setShowLogin(!showLogin);
   };
 
   return (
@@ -28,8 +34,14 @@ function App() {
         </>
       ) : (
         <>
-          <Login onLogin={handleLogin} />
-          <Signup onLogin={handleLogin} />
+          {showLogin ? (
+            <Login onLogin={handleLogin} />
+          ) : (
+            <Signup onLogin={handleLogin} />
+          )}
+          <button className="btn btn-secondary" onClick={toggleForm}>
+            {showLogin ? 'Sign Up' : 'Login'}
+          </button>
         </>
       )}
     </div>

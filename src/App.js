@@ -24,8 +24,8 @@ function App() {
   };
 
   return (
-    <div>
-      <h1>Task Manager</h1>
+    <div className='main'>
+      <h1 className='main-title'>Task Manager</h1>
       {token ? (
         <>
           <button className="btn btn-danger" onClick={handleLogout}>Logout</button>

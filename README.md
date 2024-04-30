@@ -1,70 +1,73 @@
-# Getting Started with Create React App
+# Frontend do Task Manager
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Este é o frontend do Task Manager, uma aplicação web para gerenciar tarefas e tags associadas a essas tarefas. Com este aplicativo, você pode facilmente criar, visualizar, atualizar e excluir tarefas, além de gerenciar as tags relacionadas a essas tarefas.
 
-## Available Scripts
+## Tecnologias Utilizadas
 
-In the project directory, you can run:
+- React.js
+- Axios
+- Bootstrap (para estilos)
 
-### `npm start`
+## Funcionalidades
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+- Autenticação de usuário (login e signup)
+- Exibição de lista de tarefas e tags
+- Criação, edição e exclusão de tarefas e tags
+- Filtro de tarefas por título e/ou tag
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## Configuração
 
-### `npm test`
+1. Clone o repositório para o seu ambiente local:
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+```
+git clone https://github.com/seu-usuario/task-manager-frontend.git
+```
 
-### `npm run build`
+2. Navegue até o diretório do projeto:
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+```
+cd task-manager-frontend
+```
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+3. Instale as dependências do Node.js:
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+```
+npm install
+```
 
-### `npm run eject`
+4. Certifique-se de ter o backend do Task Manager em execução. Se ainda não tiver, siga as instruções no README do backend para configurá-lo.
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+5. Execute o aplicativo:
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+```
+npm start
+```
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+O aplicativo será executado em `http://localhost:3000`.
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+## Uso
 
-## Learn More
+- Após iniciar o aplicativo, você será redirecionado para a página de login.
+- Se não tiver uma conta, você pode criar uma clicando na opção "Sign Up" e preenchendo o formulário.
+- Após fazer login ou criar uma conta, você será redirecionado para a página da aplicação, onde poderá gerenciar suas tarefas e tags.
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+## Estrutura do Projeto
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+- `src/components`: Contém os componentes React, como TaskList, TagList, Login e Signup.
+- `src/App.js`: Arquivo principal do aplicativo, onde são definidas as rotas e o estado de autenticação.
+- `src/index.js`: Arquivo de entrada do aplicativo React.
+- `public/index.html`: Arquivo HTML base do aplicativo.
 
-### Code Splitting
+## Back-end do Projeto
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+- [Repo](https://github.com/devfelipelimabr/task-manager-back-end.git)
 
-### Analyzing the Bundle Size
+## Contribuição
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+Contribuições são bem-vindas! Sinta-se à vontade para abrir uma issue para relatar um problema ou sugerir uma melhoria.
 
-### Making a Progressive Web App
+## Licença
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+Este projeto está licenciado sob a Licença MIT. Consulte o arquivo [LICENSE](LICENSE) para obter detalhes.
 
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+--- 

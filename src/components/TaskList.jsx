@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
-function TaskList() {
+import formatDate from '../utils/formatDate';
+
+function TaskList({ token }) {
     const [tasks, setTasks] = useState([]);
     const [tags, setTags] = useState([]);
     const [newTask, setNewTask] = useState({
@@ -23,46 +25,54 @@ function TaskList() {
     const [filterTag, setFilterTag] = useState('');
 
     useEffect(() => {
-        axios.get('http://localhost:3000/tasks/all')
-            .then(response => {
-                setTasks(response.data);
-            })
-            .catch(error => {
-                console.error('Error fetching tasks:', error);
-            });
-
-        axios.get('http://localhost:3000/tags')
-            .then(response => {
-                setTags(response.data);
-            })
-            .catch(error => {
-                console.error('Error fetching tags:', error);
-            });
-    }, []);
-
-    function formatDate(dateString) {
-        const dateParts = dateString.split('T')[0].split('-');
-        const year = dateParts[0];
-        const month = dateParts[1];
-        const day = dateParts[2];
-        return day + '/' + month + '/' + year;
-    }
-
-    const handleCreateTask = () => {
-        axios.post('http://localhost:3000/tasks', newTask)
-            .then(response => {
-                setTasks([...tasks, response.data]);
-                setNewTask({
-                    title: '',
-                    description: '',
-                    date: '',
-                    duration: '',
-                    tagId: ''
+        const fetchTasks = async () => {
+            try {
+                const response = await axios.get('http://localhost:3000/tasks/all', {
+                    headers: {
+                        Authorization: `Bearer ${token}`
+                    }
                 });
-            })
-            .catch(error => {
-                console.error('Error creating task:', error);
+                setTasks(response.data);
+            } catch (error) {
+                console.error('Error fetching tasks:', error);
+            }
+        };
+
+        const fetchTags = async () => {
+            try {
+                const response = await axios.get('http://localhost:3000/tags', {
+                    headers: {
+                        Authorization: `Bearer ${token}`
+                    }
+                });
+                setTags(response.data);
+            } catch (error) {
+                console.error('Error fetching tags:', error);
+            }
+        };
+
+        fetchTasks();
+        fetchTags();
+    }, [token]);
+
+    const handleCreateTask = async () => {
+        try {
+            const response = await axios.post('http://localhost:3000/tasks', newTask, {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
             });
+            setTasks([...tasks, response.data]);
+            setNewTask({
+                title: '',
+                description: '',
+                date: '',
+                duration: '',
+                tagId: ''
+            });
+        } catch (error) {
+            console.error('Error creating task:', error);
+        }
     };
 
     const handleEditTask = taskId => {
@@ -78,7 +88,11 @@ function TaskList() {
     };
 
     const handleUpdateTask = () => {
-        axios.put(`http://localhost:3000/tasks/${editingTaskId}`, editingTask)
+        axios.put(`http://localhost:3000/tasks/${editingTaskId}`, editingTask, {
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        })
             .then(() => {
                 const updatedTasks = tasks.map(task =>
                     task.id === editingTaskId ? { ...task, ...editingTask } : task
@@ -99,7 +113,11 @@ function TaskList() {
     };
 
     const handleDeleteTask = taskId => {
-        axios.delete(`http://localhost:3000/tasks/${taskId}`)
+        axios.delete(`http://localhost:3000/tasks/${taskId}`, {
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        })
             .then(() => {
                 setTasks(tasks.filter(task => task.id !== taskId));
             })
@@ -111,12 +129,16 @@ function TaskList() {
     const handleFilter = () => {
         const tag = tags.find(tag => tag.name === filterTag);
         const tagId = tag ? tag.id : null;
-        axios.get('http://localhost:3000/tasks', {
-            params: {
-                title: filterTitle,
-                TagId: tagId
-            }
-        })
+        axios.get('http://localhost:3000/tasks',
+            {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                },
+                params: {
+                    title: filterTitle,
+                    TagId: tagId
+                }
+            })
             .then(response => {
                 setTasks(response.data);
             })

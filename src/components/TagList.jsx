@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
-function TagList() {
+function TagList({ token }) {
   const [tags, setTags] = useState([]);
   const [newTagName, setNewTagName] = useState('');
   const [editingTagId, setEditingTagId] = useState(null);
@@ -10,28 +10,42 @@ function TagList() {
   const [editingTagOriginalName, setEditingTagOriginalName] = useState('');
 
   useEffect(() => {
-    axios.get('http://localhost:3000/tags')
-      .then(response => {
+    const fetchTags = async () => {
+      try {
+        const response = await axios.get('http://localhost:3000/tags', {
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
+        });
         setTags(response.data);
-      })
-      .catch(error => {
+      } catch (error) {
         console.error('Error fetching tags:', error);
-      });
-  }, []);
+      }
+    };
 
-  const handleCreateTag = () => {
-    axios.post('http://localhost:3000/tags', { name: newTagName })
-      .then(response => {
-        setTags([...tags, response.data]);
-        setNewTagName('');
-      })
-      .catch(error => {
-        console.error('Error creating tag:', error);
+    fetchTags();
+  }, [token]);
+
+  const handleCreateTag = async () => {
+    try {
+      const response = await axios.post('http://localhost:3000/tags', { name: newTagName }, {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
       });
+      setTags([...tags, response.data]);
+      setNewTagName('');
+    } catch (error) {
+      console.error('Error creating tag:', error);
+    }
   };
 
   const handleDeleteTag = tagId => {
-    axios.delete(`http://localhost:3000/tags/${tagId}`)
+    axios.delete(`http://localhost:3000/tags/${tagId}`, {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    })
       .then(() => {
         setTags(tags.filter(tag => tag.id !== tagId));
       })
@@ -41,7 +55,11 @@ function TagList() {
   };
 
   const handleEditTag = () => {
-    axios.put(`http://localhost:3000/tags/${editingTagId}`, { name: editingTagName })
+    axios.put(`http://localhost:3000/tags/${editingTagId}`, { name: editingTagName }, {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    })
       .then(() => {
         const updatedTags = tags.map(tag => {
           if (tag.id === editingTagId) {

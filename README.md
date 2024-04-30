@@ -20,7 +20,7 @@ Este é o frontend do Task Manager, uma aplicação web para gerenciar tarefas e
 1. Clone o repositório para o seu ambiente local:
 
 ```
-git clone https://github.com/seu-usuario/task-manager-frontend.git
+git clone https://github.com/devfelipelimabr/task-manager-frontend
 ```
 
 2. Navegue até o diretório do projeto:
